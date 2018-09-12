@@ -5,9 +5,9 @@ Parse.serverURL = "http://localhost:1337/parse";
 // /Parse.liveQueryServerURL = "ws://cryptic-shore-11692.herokuapp.com/parse";
 
 let StreamEvents = Parse.Object.extend('StreamEvents');
-let query = new Parse.Query(StreamEvents);
-
-var IStreamEvents = Parse.Object.extend("StreamEvents");
+var query = new Parse.Query(StreamEvents);
+query.equalTo('TripID', 'TP1536752229197');
+//var IStreamEvents = Parse.Object.extend("StreamEvents");
 
 
 let subscription = query.subscribe(query);
@@ -16,10 +16,10 @@ subscription.on('open', () => {
     console.log('connection opened');
     console.log('Will prefetch all the old data from the server and setup the queue.');
     console.log('Listening for streams.');
-    var Iquery = new Parse.Query(IStreamEvents);
+    //var Iquery = new Parse.Query(StreamEvents); //IStreamEvents TP1536749870296
 
     try {
-        Iquery.find().then((data) => {
+        query.find().then((data) => {
             console.log("Data " + data.length)
             console.log(JSON.stringify(data))
 
@@ -54,3 +54,6 @@ subscription.on('enter', (object) => {
 subscription.on('leave', (object) => {
     console.log('object left' + JSON.stringify(object));
 });
+
+
+
